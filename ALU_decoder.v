@@ -1,8 +1,8 @@
 module ALU_decoder(
-    input  [1:0] alu_op,
-    input  [2:0] funct3,
-    input        funct7b5,
-    output logic [3:0] alu_control
+    input  [1:0] alu_op,   // Tín hiệu điều khiển từ bộ điều khiển chính (Main Control)
+    input  [2:0] funct3,    // 3-bit funct3 từ lệnh
+    input        funct7b5,   // Bit thứ 5 của funct7 (bit 30 của lệnh R-type)
+    output logic [3:0] alu_control   // Đầu ra điều khiển cho ALU (chọn phép toán)
 );
     always_comb begin
         alu_control = 4'b0010; // ADD mặc định (load/store)

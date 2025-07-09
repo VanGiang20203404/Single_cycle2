@@ -9,16 +9,17 @@ module RegisterFile (
     output logic [31:0] ReadData2,
     input logic rst_n
 );
+    // Khai báo 32 thanh ghi 32-bit: từ x0 đến x31
     logic [31:0] registers [0:31];
 
-    assign ReadData1 = (rs1 != 0) ? registers[rs1] : 32'b0;
-    assign ReadData2 = (rs2 != 0) ? registers[rs2] : 32'b0;
+    assign ReadData1 = (rs1 != 0) ? registers[rs1] : 32'b0; // Đọc dữ liệu từ rs1, nếu rs1 = 0 thì luôn trả về 0
+    assign ReadData2 = (rs2 != 0) ? registers[rs2] : 32'b0; // Đọc dữ liệu từ rs2, nếu rs2 = 0 thì luôn trả về 0
 
     always_ff @(posedge clk or negedge rst_n) begin
         if (!rst_n) begin
             for (int i = 0; i < 32; i = i + 1)
                 registers[i] <= 32'b0;
-        end else if (RegWrite && rd != 0) begin
+        end else if (RegWrite && rd != 0) begin  // Nếu được phép ghi và không ghi vào x0 (rd ≠ 0)
             registers[rd] <= WriteData;
         end
     end
